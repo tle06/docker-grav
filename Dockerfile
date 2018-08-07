@@ -1,4 +1,4 @@
-#Dockerfile modern-paste
+#Dockerfile docker-grav
 FROM nginx:latest
 LABEL tlnk <support@tlnk.fr>
 
