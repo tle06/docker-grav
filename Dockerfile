@@ -1,5 +1,5 @@
 #Dockerfile docker-grav
-FROM nginx:latest
+FROM ubuntu:latest
 LABEL tlnk <support@tlnk.fr>
 
 ARG VERSION
@@ -11,39 +11,47 @@ EXPOSE 80
 #Install packages
 RUN apt-get update -y && \
     apt-get upgrade -y && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && \
     apt-get install -y nano \
     git \
     zip \
     unzip \
-    nginx \
-    php7.0-fpm \
-    php7.0-cli \
-    php7.0-gd \
-    php7.0-curl \
-    php7.0-mbstring \
-    php7.0-xml \
-    php7.0-zip \
-    php-apcu
+    apache2 \
+    php7.2 \
+    libapache2-mod-php7.2 \
+    php7.2-common \
+    php7.2-mbstring \
+    php7.2-xmlrpc \
+    php7.2-soap \
+    php7.2-gd \
+    php7.2-xml \
+    php7.2-cli \
+    php7.2-curl \
+    php7.2-zip
 
 COPY entrypoint /entrypoint
+COPY grav.conf /etc/apache2/sites-available/grav.conf
 
-RUN git clone -b master https://github.com/getgrav/grav.git /usr/share/nginx/html && \
-    cd /usr/share/nginx/html/ && \
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
-    php composer-setup.php && \
-    php -r "unlink('composer-setup.php');" && \
-    php bin/composer.phar install --no-dev -o && \
-    bin/grav install && \
+RUN mkdir /var/www/grav && \
+    git clone https://github.com/getgrav/grav.git /var/www/grav && \
+    /var/www/grav/bin/grav install && \
+    chown -R www-data:www-data /var/www/grav/ && \
+    chmod -R 755 /var/www/grav && \
+    a2ensite grav.conf && \
+    a2enmod rewrite && \
+    a2enmod proxy proxy_fcgi rewrite && \
     apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/apache2/sites-available/default-ssl.conf && \
+    rm -rf /var/www/html && \
     chmod +x /entrypoint/*sh && \
     chmod +x /entrypoint/entrypoint.d/*.sh
 
-COPY .htaccess /usr/share/nginx/html/.htaccess
-WORKDIR /usr/share/nginx/html/
+WORKDIR /var/www/grav/bin/grav
 
 ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
-CMD ["php", "-S", "localhost:8000", "/usr/share/nginx/html/system/router.php"]
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 
 LABEL org.label-schema.version=$VERSION
