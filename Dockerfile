@@ -18,6 +18,7 @@ RUN apt-get update -y && \
     apt-get install -y nano \
     wget \
     git \
+    unzip \
     php7.2 \
     libapache2-mod-php7.2 \
     php7.2-common \
@@ -31,25 +32,28 @@ RUN apt-get update -y && \
     php7.2-zip
 
 COPY entrypoint /entrypoint
-COPY apache_app.conf /etc/apache2/sites-available/app.conf
+COPY apache_app.conf /etc/apache2/sites-available/grav.conf
 
-RUN wget https://getgrav.org/download/core/grav-admin/1.4.8 -O grav.zip && \
+RUN cd /var/www && \
+    wget https://getgrav.org/download/core/grav-admin/1.4.8 -O grav.zip && \
     unzip grav.zip && \
-    mv grav-admin/ /var/www/app && \
+    mv grav-admin/ /var/www/grav && \
     #git clone https://github.com/getgrav/grav.git /var/www/app && \
     #/var/www/app/bin/grav install && \
-    chown -R www-data:www-data /var/www/app/ && \
-    chmod -R 755 /var/www/app/ && \
-    a2ensite app.conf && \
+    chown -R www-data:www-data /var/www/grav/ && \
+    chmod -R 755 /var/www/grav/ && \
+    echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+    a2ensite grav.conf && \
     a2enmod rewrite && \
     a2enmod proxy proxy_fcgi rewrite && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/apache2/sites-available/default-ssl.conf && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/000-default.conf&& \
     rm -rf /var/www/html && \
+    rm -rf /var/www/grav.zip && \
     chmod +x /entrypoint/*sh && \
     chmod +x /entrypoint/entrypoint.d/*.sh
 
-WORKDIR /var/www/app
+WORKDIR /var/www/grav
 
 ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

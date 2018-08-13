@@ -30,6 +30,7 @@ The underlying architecture of Grav is designed to use well-established and _bes
 * apache2
 * nano
 * git
+* unzip
 * php7.2
 * libapache2-mod-php7.2
 * php7.2-common
