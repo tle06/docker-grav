@@ -16,6 +16,7 @@ RUN apt-get update -y && \
     apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y nano \
+    wget \
     git \
     php7.2 \
     libapache2-mod-php7.2 \
@@ -32,7 +33,10 @@ RUN apt-get update -y && \
 COPY entrypoint /entrypoint
 COPY apache_app.conf /etc/apache2/sites-available/app.conf
 
-RUN git clone https://github.com/getgrav/grav.git /var/www/app && \
+RUN wget https://getgrav.org/download/core/grav-admin/1.4.8 -O grav.zip && \
+    unzip grav.zip && \
+    mv grav-admin/ /var/www/app && \
+    #git clone https://github.com/getgrav/grav.git /var/www/app && \
     #/var/www/app/bin/grav install && \
     chown -R www-data:www-data /var/www/app/ && \
     chmod -R 755 /var/www/app/ && \
