@@ -10,15 +10,13 @@ EXPOSE 80
 
 #Install packages
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y software-properties-common && \
+    apt-get install -y software-properties-common tzdata && \
+    ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
     add-apt-repository -y ppa:ondrej/php && \
-    apt-get update && \
+    apt-get update -y && \
+    apt-get upgrade -y && \
     apt-get install -y nano \
     git \
-    zip \
-    unzip \
-    apache2 \
     php7.2 \
     libapache2-mod-php7.2 \
     php7.2-common \
@@ -32,14 +30,13 @@ RUN apt-get update -y && \
     php7.2-zip
 
 COPY entrypoint /entrypoint
-COPY grav.conf /etc/apache2/sites-available/grav.conf
+COPY apache_app.conf /etc/apache2/sites-available/app.conf
 
-RUN mkdir /var/www/grav && \
-    git clone https://github.com/getgrav/grav.git /var/www/grav && \
-    /var/www/grav/bin/grav install && \
-    chown -R www-data:www-data /var/www/grav/ && \
-    chmod -R 755 /var/www/grav && \
-    a2ensite grav.conf && \
+RUN git clone https://github.com/getgrav/grav.git /var/www/app && \
+    /var/www/app/bin/grav install && \
+    chown -R www-data:www-data /var/www/app/ && \
+    chmod -R 755 /var/www/app/ && \
+    a2ensite app.conf && \
     a2enmod rewrite && \
     a2enmod proxy proxy_fcgi rewrite && \
     apt-get clean && \
@@ -48,7 +45,7 @@ RUN mkdir /var/www/grav && \
     chmod +x /entrypoint/*sh && \
     chmod +x /entrypoint/entrypoint.d/*.sh
 
-WORKDIR /var/www/grav/bin/grav
+WORKDIR /var/www/app
 
 ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
