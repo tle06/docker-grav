@@ -33,7 +33,7 @@ COPY entrypoint /entrypoint
 COPY apache_app.conf /etc/apache2/sites-available/app.conf
 
 RUN git clone https://github.com/getgrav/grav.git /var/www/app && \
-    /var/www/app/bin/grav install && \
+    #/var/www/app/bin/grav install && \
     chown -R www-data:www-data /var/www/app/ && \
     chmod -R 755 /var/www/app/ && \
     a2ensite app.conf && \

@@ -1,6 +1,8 @@
 
 #Still in dev mod
+
 [logo]: https://getgrav-grav.netdna-ssl.com/user/pages/01.tour/_easy-to-use/001-dashboard.png?g-4c8581e6 "Image"
+
 # Supported tags and respective
 
 * latest [apache/Dockerfile](https://github.com/tle06/docker-grav/blob/master/Dockerfile)
