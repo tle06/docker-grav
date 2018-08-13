@@ -1,5 +1,5 @@
 
-
+#Still in dev mod
 [logo]: https://getgrav-grav.netdna-ssl.com/user/pages/01.tour/_easy-to-use/001-dashboard.png?g-4c8581e6 "Image"
 # Supported tags and respective
 
@@ -42,7 +42,7 @@ The underlying architecture of Grav is designed to use well-established and _bes
 * __PHP_MEMORY_LIMIT__ = 256M -> config /etc/php/7.0/apache2/php.ini
 
 # How to use this image
-## Start ownCloud
+## Start grav
 
 Starting the grav instance listening on port 80 is as easy as the following:
 ``` Docker
