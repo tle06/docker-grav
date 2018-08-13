@@ -10,6 +10,7 @@
 This image is updated via pull requests to the tle06/docker-grav GitHub repo.
 
 # What is grav
+
 Grav is a **Fast**, **Simple**, and **Flexible**, file-based Web-platform.  There is **Zero** installation required.  Just extract the ZIP archive, and you are already up and running.  It follows similar principles to other flat-file CMS platforms, but has a different design philosophy than most. Grav comes with a powerful **Package Management System** to allow for simple installation and upgrading of plugins and themes, as well as simple updating of Grav itself.
 
 The underlying architecture of Grav is designed to use well-established and _best-in-class_ technologies to ensure that Grav is simple to use and easy to extend. Some of these key technologies include:
@@ -24,14 +25,22 @@ The underlying architecture of Grav is designed to use well-established and _bes
 * [Symfony Console](http://symfony.com/doc/current/components/console/introduction.html): for CLI interface
 * [Gregwar Image Library](https://github.com/Gregwar/Image): for dynamic image manipulatio
 
-> [grav.org](https://getgrav.org/)
-
-![alt text][logo]
-
 # Image configuration
 
 * apache2
-
+* nano
+* git
+* php7.2
+* libapache2-mod-php7.2
+* php7.2-common
+* php7.2-mbstring
+* php7.2-xmlrpc
+* php7.2-soap
+* php7.2-gd
+* php7.2-xml
+* php7.2-cli
+* php7.2-curl
+* php7.2-zip
 
 * port 80
 * workdir = /var/www/app
