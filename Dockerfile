@@ -29,7 +29,8 @@ RUN apt-get update -y && \
     php7.2-xml \
     php7.2-cli \
     php7.2-curl \
-    php7.2-zip
+    php7.2-zip \
+    php7.2-ldap
 
 COPY entrypoint /entrypoint
 COPY apache_app.conf /etc/apache2/sites-available/grav.conf
