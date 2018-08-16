@@ -45,6 +45,9 @@ The underlying architecture of Grav is designed to use well-established and _bes
 * port 80
 * workdir = /var/www/app
 
+* grav cms
+* grav plugin admin
+
 # Available ENV variable
 
 * __PHP_UPLOAD_MAX_FILESIZE__ = 2M
@@ -62,7 +65,7 @@ Starting the grav instance listening on port 80 is as easy as the following:
 $ docker run -d -p 80:80 tlnk/docker-grav
 
 ```
-Then go to http://localhost/ and go through the wizard.
+Then go to http://localhost/admin and go through the wizard.
 
 
 ## Persistent data

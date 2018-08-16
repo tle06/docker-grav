@@ -35,13 +35,9 @@ RUN apt-get update -y && \
 COPY entrypoint /entrypoint
 COPY apache_app.conf /etc/apache2/sites-available/grav.conf
 
-# RUN cd /var/www && \
-#     wget https://getgrav.org/download/core/grav-admin/1.4.8 -O grav.zip && \
-#     unzip grav.zip && \
-#     mv grav-admin/ /var/www/grav && \
 RUN git clone https://github.com/getgrav/grav.git /var/www/grav && \
     /var/www/grav/bin/grav install && \
-    /var/www/gravbin/gpm install admin -y && \
+    /var/www/grav/bin/gpm install admin -y && \
     chown -R www-data:www-data /var/www/grav/ && \
     chmod -R 755 /var/www/grav/ && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
