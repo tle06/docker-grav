@@ -1,6 +1,4 @@
 
-#Still in dev mod
-
 ![Screenshot](https://getgrav-grav.netdna-ssl.com/user/pages/01.tour/_easy-to-use/001-dashboard.png?g-4c8581e6)
 
 # Supported tags and respective
@@ -42,16 +40,18 @@ The underlying architecture of Grav is designed to use well-established and _bes
 * php7.2-cli
 * php7.2-curl
 * php7.2-zip
+* php7.2 ldap
 
 * port 80
 * workdir = /var/www/app
 
 # Available ENV variable
 
-* __PHP_UPLOAD_MAX_FILESIZE__ = 100M -> config /etc/php/7.0/apache2/php.ini
-* __PHP_POST_MAX_SIZE__ = 100M -> config /etc/php/7.0/apache2/php.ini
-* __PHP_MAX_EXCUTION_TIME__ = 200 -> config /etc/php/7.0/apache2/php.ini
-* __PHP_MEMORY_LIMIT__ = 256M -> config /etc/php/7.0/apache2/php.ini
+* __PHP_UPLOAD_MAX_FILESIZE__ = 2M
+* __PHP_POST_MAX_SIZE__ = 8M
+* __PHP_MEMORY_LIMIT__ = 128M
+* __PHP_FILE_UPLOAD__ = On
+* __PHP_ALLOW_URL__ = On
 
 # How to use this image
 ## Start grav
@@ -67,10 +67,9 @@ Then go to http://localhost/ and go through the wizard.
 
 ## Persistent data
 
-All data beyond what lives in the database (file uploads, etc) is stored within the default volume /var/www/app.
+All data beyond what lives in the database (file uploads, etc) is stored within the default volume /var/www/app. For more information about the folder please refer to this [URL](https://learn.getgrav.org/basics/folder-structure).
 
 * -v /<mydatalocation>:/var/www/app
 
-## Caveat
-
-You need to map the host port to the container port that apache listens on when going through the installation wizard. By default, this is port 80.
+# Rancher template
+An rancher template is also available [here](https://github.com/tle06/rancher-catalog.git)
