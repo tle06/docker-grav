@@ -16,7 +16,7 @@ else
     /var/www/grav/bin/grav install
 
     echo "Install grav admin plugin"
-    bin/gpm install admin -y
+    /var/www/grav/bin/gpm install admin -y
 
     echo "Setup permission for www-data"
     chown -R www-data:www-data /var/www/grav
