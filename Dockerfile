@@ -36,6 +36,8 @@ COPY entrypoint /entrypoint
 COPY apache_app.conf /etc/apache2/sites-available/grav.conf
 
 RUN git clone https://github.com/getgrav/grav.git /var/www/grav && \
+    chown -R www-data:www-data /var/www/grav/ && \
+    chmod -R 755 /var/www/grav/ && \
     /var/www/grav/bin/grav install && \
     /var/www/grav/bin/gpm install admin -y && \
     chown -R www-data:www-data /var/www/grav/ && \
