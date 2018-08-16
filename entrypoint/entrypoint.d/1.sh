@@ -14,6 +14,11 @@ else
     # mv grav-admin/ /var/www/grav
     git clone https://github.com/getgrav/grav.git /var/www/grav
     /var/www/grav/bin/grav install
+    
+    echo "Install grav admin plugin"
+    bin/gpm install admin
+
+    echo "Setup permission for www-data"
     chown -R www-data:www-data /var/www/grav
     chmod -R 755 /var/www/grav
 fi
