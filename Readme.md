@@ -1,7 +1,5 @@
 
-[![](https://images.microbadger.com/badges/image/tlnk/docker-grav.svg)](https://microbadger.com/images/tlnk/docker-grav "Get your own image badge on microbadger.com")
-
-[![](https://images.microbadger.com/badges/version/tlnk/docker-grav.svg)](https://microbadger.com/images/tlnk/docker-grav "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/tlnk/docker-grav.svg)](https://microbadger.com/images/tlnk/docker-grav "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/tlnk/docker-grav.svg)](https://microbadger.com/images/tlnk/docker-grav "Get your own version badge on microbadger.com")
 
 # Grav CMS
 
