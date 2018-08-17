@@ -17,4 +17,5 @@ else
     echo "Setup permission for www-data"
     chown -R www-data:www-data /var/www/grav
     chmod -R 755 /var/www/grav
+    echo "End setup"
 fi
