@@ -7,6 +7,9 @@ VAR_PHP_FILE_UPLOAD="${PHP_FILE_UPLOAD:-On}"
 VAR_PHP_ALLOW_URL="${PHP_ALLOW_URL:-On}"
 #VAR_PHP_MAX_EXCUTION_TIME="${PHP_MAX_EXCUTION_TIME:-30}"
 
+if [ "$VAR_PHP_CONFIG" = true ]; then
+     echo "PHP config already applied once, upgrade to applied new one"
+else
 
 echo "[CONFIG] upload_max_filesize with:${VAR_PHP_UPLOAD_MAX_FILESIZE}"
 sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = $VAR_PHP_UPLOAD_MAX_FILESIZE/g" /etc/php/7.2/apache2/php.ini
@@ -19,3 +22,5 @@ sed -i -e "s/file_uploads\s*=\s*On/file_uploads = $VAR_PHP_FILE_UPLOAD/g" /etc/p
 echo "[CONFIG] allow_url_fopen with:${VAR_PHP_ALLOW_URL}"
 sed -i -e "s/allow_url_fopen\s*=\s*On/allow_url_fopen = $VAR_PHP_ALLOW_URL/g" /etc/php/7.2/apache2/php.ini
 #sed -i -e "s/max_execution_time\s*=\s*30/max_execution_time = $VAR_PHP_MAX_EXCUTION_TIME/g" /etc/php/7.2/apache2/php.ini
+VAR_PHP_CONFIG = true
+fi
