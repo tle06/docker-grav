@@ -6,7 +6,14 @@ VAR_PHP_MEMORY_LIMIT="${PHP_MEMORY_LIMIT:-128M}"
 VAR_PHP_FILE_UPLOAD="${PHP_FILE_UPLOAD:-On}"
 VAR_PHP_ALLOW_URL="${PHP_ALLOW_URL:-On}"
 #VAR_PHP_MAX_EXCUTION_TIME="${PHP_MAX_EXCUTION_TIME:-30}"
-VAR_PHP_CONFIG_APPLIED="${PHP_CONFIG_APPLIED:-false}"
+
+file="/entrypoint/entrypoint.d/php_config_applied"
+if [ ! -f "$file" ]; then
+    VAR_PHP_CONFIG_APPLIED=false
+    else
+    VAR_PHP_CONFIG_APPLIED=$(cat $file)
+fi
+
 
 if [ "${VAR_PHP_CONFIG_APPLIED}" = true ]; then
      echo "PHP config already applied once, upgrade to applied new one"
@@ -24,8 +31,7 @@ echo "[CONFIG] allow_url_fopen with:${VAR_PHP_ALLOW_URL}"
 sed -i -e "s/allow_url_fopen\s*=\s*On/allow_url_fopen = $VAR_PHP_ALLOW_URL/g" /etc/php/7.2/apache2/php.ini
 #sed -i -e "s/max_execution_time\s*=\s*30/max_execution_time = $VAR_PHP_MAX_EXCUTION_TIME/g" /etc/php/7.2/apache2/php.ini
 
-VAR_PHP_CONFIG_APPLIED=true
+echo "true" > /entrypoint/entrypoint.d/php_config_applied
 
 fi
 
-echo "export PHP_CONFIG_APPLIED=${VAR_PHP_CONFIG_APPLIED}" >> ~/.bashrc
